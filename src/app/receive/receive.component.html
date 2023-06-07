@@ -1,0 +1,35 @@
+<div class="title">窗口接单系统</div>
+<div *ngIf="type == 'window'" style="margin: 30px">
+  接单状态&nbsp;&nbsp;:&nbsp;&nbsp;<nz-switch [(ngModel)]="status" nzCheckedChildren="开" nzUnCheckedChildren="关" (ngModelChange)="changeStatus()"></nz-switch>
+</div>
+<div *ngFor="let order of receivedOrders">
+  <nz-alert nzType="info" nzMessage="进行中订单ID: {{order.oID}}" [nzAction]="actionTemplate"
+            nzDescription="预订时间: {{order.oDatetime}} &nbsp;&nbsp;&nbsp;&nbsp;订单状态: {{order.oStatus | oStatus}}" nzShowIcon></nz-alert>
+  <ng-template #actionTemplate>
+    <button nz-button nzType="primary" [nzSize]="size" nzShape="round" routerLink="/order-details/{{order.oID}}">
+      <i nz-icon nzType="snippets" nzTheme="outline"></i>
+      查看详情
+    </button>
+    &nbsp;&nbsp;
+    <button nz-button nzType="primary" [nzSize]="size" nzShape="round" (click)="checkOrder(order.oID)" *ngIf="order.oStatus == 0">
+      <i nz-icon nzType="file-add" nzTheme="outline"></i>
+      接收订单
+    </button>
+    <button nz-button nzType="primary" [nzSize]="size" nzShape="round" (click)="cookOrder(order.oID)" *ngIf="order.oStatus == 1">
+      <i nz-icon nzType="sound" nzTheme="outline"></i>
+      餐品备好
+    </button>
+    <button nz-button nzType="primary" [nzSize]="size" nzShape="round" (click)="finishOrder(order.oID)" *ngIf="order.oStatus == 2">
+      <i nz-icon nzType="check-circle" nzTheme="outline"></i>
+      完成订单
+    </button>
+  </ng-template>
+</div>
+
+<nz-result *ngIf="type != 'window'" nzStatus="403" nzTitle="403" nzSubTitle="您无权访问当前页面!">
+  <div nz-result-extra>
+    <button nz-button nzType="primary" routerLink="">返回首页</button>
+  </div>
+</nz-result>
+
+<nz-empty nzNotFoundImage="simple"></nz-empty>

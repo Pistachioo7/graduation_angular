@@ -1,0 +1,116 @@
+<div class="title">餐品信息管理系统</div>
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" style="margin: auto" *ngIf="type == 'window'">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>餐品ID</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="校验中..." [nzErrorTip]="IDErrorTpl">
+      <input nz-input formControlName="mID" />
+      <ng-template #IDErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">ID不能为空!</ng-container>
+        <ng-container *ngIf="control.hasError('duplicated')">ID重复!</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>餐品名称</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="mNameErrorTpl">
+      <input nz-input formControlName="mName" type="text" />
+      <ng-template #mNameErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">餐品名称不能为空!</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>餐品类型</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="mTypeErrorTpl">
+      <input nz-input formControlName="mType" type="text" />
+      <ng-template #mTypeErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">餐品类型不能为空!</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>主要成分</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="mainIngredientErrorTpl">
+      <input nz-input formControlName="mainIngredient" type="text" />
+      <ng-template #mainIngredientErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">主要成分不能为空!</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>价格</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="priceErrorTpl">
+      <input nz-input formControlName="price" type="text" />
+      <ng-template #priceErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">价格不能为空!</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>最大供应量</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="maxSupplyErrorTpl">
+      <input nz-input formControlName="maxSupply" type="text" />
+      <ng-template #maxSupplyErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">最大供应量不能为空!</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+      <button nz-button nzType="primary" [disabled]="!validateForm.valid" type="button" (click)="addConfirm()">添加餐品</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<nz-table nzTableLayout="fixed" style="margin: 30px" *ngIf="type == 'window'">
+  <thead>
+  <tr>
+    <th>餐品ID</th>
+    <th nzCustomFilter>
+      餐品名称
+      <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+        <i nz-icon nzType="search"></i>
+      </nz-filter-trigger>
+    </th>
+    <th>窗口ID</th>
+    <th>餐品类型</th>
+    <th>主要成分</th>
+    <th>价格</th>
+    <th>最大供应量</th>
+    <th>剩余供应量</th>
+    <th>编辑</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let meal of mealsDisplay">
+    <td>{{ meal.mID }}</td>
+    <td>{{ meal.mName }}</td>
+    <td>{{ meal.wID }}</td>
+    <td>{{ meal.mType }}</td>
+    <td>{{ meal.mainIngredient }}</td>
+    <td>{{ meal.price }}</td>
+    <td>{{ meal.maxSupply }}</td>
+    <td>{{ meal.remainSupply }}</td>
+    <td>
+      <a routerLink="/edit-meal/{{meal.mID}}">修改 一 {{ meal.mName }}</a>
+      <nz-divider nzType="vertical"></nz-divider>
+      <a (click)="deleteConfirm(meal.mID, meal.mName)">删除</a>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input type="text" nz-input placeholder="搜索餐品名称" [(ngModel)]="searchValue" />
+      <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">搜索</button>
+      <button nz-button nzSize="small" (click)="reset()">重置</button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+
+<nz-result *ngIf="type != 'window'" nzStatus="403" nzTitle="403" nzSubTitle="您无权访问当前页面!">
+  <div nz-result-extra>
+    <button nz-button nzType="primary" routerLink="">返回首页</button>
+  </div>
+</nz-result>

@@ -1,0 +1,23 @@
+p {
+  margin: 0;
+}
+
+nz-alert {
+  margin-bottom: 16px;
+}
+
+[nz-button] {
+  margin-right: 8px;
+  margin-bottom: 12px;
+}
+
+nz-progress {
+  margin-right: 8px;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
+.mystyle{
+  background: #eadf0a;
+  width: 45%;
+}

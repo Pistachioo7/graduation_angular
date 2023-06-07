@@ -1,0 +1,20 @@
+<nz-descriptions nzTitle="订单详情" nzBordered style="margin: 50px" *ngIf="type == 'admin' || type == 'window' || id == order.uID">
+  <nz-descriptions-item nzTitle="订单ID">{{order.oID}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="用户ID">{{user.uID}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="用户姓名">{{user.uName}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="用户性别">{{user.uSex | sex}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="窗口ID">{{window.wID}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="窗口名称">{{window.wName}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="餐品ID">{{meal.mID}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="餐品名称">{{meal.mName}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="价格">{{meal.price}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="下单时间">{{order.oDatetime}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="完成时间">{{order.fDatetime}}</nz-descriptions-item>
+</nz-descriptions>
+<button nz-button (click)="goBack()" style="display:block;margin:0 auto" *ngIf="type == 'admin' || type == 'window' || id == order.uID">返回</button>
+
+<nz-result *ngIf="type != 'admin' && type != 'window' && id != order.uID" nzStatus="403" nzTitle="403" nzSubTitle="您无权访问当前页面!">
+  <div nz-result-extra>
+    <button nz-button nzType="primary" routerLink="">返回首页</button>
+  </div>
+</nz-result>

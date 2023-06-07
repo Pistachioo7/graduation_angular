@@ -1,0 +1,45 @@
+<div class="title">窗口历史订单</div>
+<nz-table nzTableLayout="fixed" style="margin: 30px" *ngIf="type == 'window'">
+  <thead>
+  <tr>
+    <th nzCustomFilter>
+      订单ID
+      <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+        <i nz-icon nzType="search"></i>
+      </nz-filter-trigger>
+    </th>
+    <th>用户ID</th>
+    <th>窗口ID</th>
+    <th>餐品ID</th>
+    <th>订单状态</th>
+    <th>下单时间</th>
+    <th>完成时间</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let order of ordersDisplay">
+    <td routerLink="/order-details/{{order.oID}}" style="color: #2196F3">{{ order.oID }}</td>
+    <td>{{ order.uID }}</td>
+    <td>{{ order.wID }}</td>
+    <td>{{ order.mID }}</td>
+    <td>{{ order.oStatus | oStatus}}</td>
+    <td>{{ order.oDatetime }}</td>
+    <td>{{ order.fDatetime }}</td>
+  </tr>
+  </tbody>
+</nz-table>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input type="text" nz-input placeholder="搜索订单ID" [(ngModel)]="searchValue" />
+      <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">搜索</button>
+      <button nz-button nzSize="small" (click)="reset()">重置</button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+
+<nz-result *ngIf="type != 'window'" nzStatus="403" nzTitle="403" nzSubTitle="您无权访问当前页面!">
+  <div nz-result-extra>
+    <button nz-button nzType="primary" routerLink="">返回首页</button>
+  </div>
+</nz-result>

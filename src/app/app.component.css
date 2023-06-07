@@ -1,0 +1,10 @@
+.title-block{
+  border-left: 10px solid #2196F3;
+  border-right: 10px solid #2196F3;
+  background: #d7e5e7;
+  padding: 14px;
+  font-size: 30px;
+  letter-spacing: 1px;
+  font-family: Microsoft YaHei, serif;
+  color: #6045c4;
+}

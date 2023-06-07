@@ -1,0 +1,41 @@
+.search-box {
+  padding: 8px;
+}
+
+.search-box input {
+  width: 188px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.search-box button {
+  width: 90px;
+}
+
+.search-button {
+  margin-right: 8px;
+}
+
+.editable-cell {
+  position: relative;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+
+.editable-row:hover .editable-cell {
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 4px 11px;
+}
+
+.title {
+  padding: 20px;
+  text-align: center;
+  font-family: DFKai-SB, serif;
+  font-size: 30px;
+  color: #2196F3;
+  background-color: #ddffff;
+  border-left: 10px solid #2196F3;
+  border-right: 10px solid #2196F3;
+  margin: 30px;
+}

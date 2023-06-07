@@ -1,0 +1,13 @@
+<img src="assets/images/{{meal.mID}}.jpg" style="clear: both; display: block; margin: auto; width: 500px; height: 400px">
+<nz-descriptions nzTitle="餐品详情" nzBordered style="margin: 50px">
+  <nz-descriptions-item nzTitle="餐品ID">{{meal.mID}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="餐品名称">{{meal.mName}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="供应窗口ID">{{meal.wID}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="餐品类型">{{meal.mType}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="主要成分">{{meal.mainIngredient}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="价格">{{meal.price}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="最大供应量">{{meal.maxSupply}}</nz-descriptions-item>
+  <nz-descriptions-item nzTitle="剩余供应量">{{meal.remainSupply}}</nz-descriptions-item>
+</nz-descriptions>
+<button nz-button nzType="primary" (click)="orderConfirm(meal)" *ngIf="type == '' && id != ''" style="display:block;margin:0 auto">订餐</button>&nbsp;&nbsp;
+<button nz-button (click)="goBack()" style="display:block;margin:0 auto">返回</button>

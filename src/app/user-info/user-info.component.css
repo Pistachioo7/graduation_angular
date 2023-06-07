@@ -1,0 +1,15 @@
+button {
+  margin-left: 8px;
+}
+
+.title {
+  padding: 20px;
+  text-align: center;
+  font-family: DFKai-SB, serif;
+  font-size: 30px;
+  color: #2196F3;
+  background-color: #ddffff;
+  border-left: 10px solid #2196F3;
+  border-right: 10px solid #2196F3;
+  margin: 30px;
+}

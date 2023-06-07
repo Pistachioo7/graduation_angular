@@ -1,0 +1,59 @@
+<div class="title">注册系统</div>
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" style="margin: auto">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>ID</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="校验中..." [nzErrorTip]="IDErrorTpl">
+      <input nz-input formControlName="uID" />
+      <ng-template #IDErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">ID不能为空!</ng-container>
+        <ng-container *ngIf="control.hasError('duplicated')">ID重复!</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>姓名</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="nameErrorTpl">
+      <input nz-input formControlName="uName" type="text" />
+      <ng-template #nameErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">姓名不能为空!</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>密码</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback nzErrorTip="密码不能为空!">
+      <input nz-input type="password" formControlName="uPassword" (ngModelChange)="validateConfirmPassword()" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>确认密码</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="passwordErrorTpl">
+      <input nz-input type="password" formControlName="confirm" />
+      <ng-template #passwordErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">请确认密码!</ng-container>
+        <ng-container *ngIf="control.hasError('confirm')">两次输入的密码不一致!</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>性别</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback>
+      <nz-radio-group formControlName="uSex">
+        <label nz-radio nzValue=1>男</label>
+        <label nz-radio nzValue=0>女</label>
+      </nz-radio-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>生日</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback>
+      <nz-date-picker formControlName="uBirthday"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+      <button nz-button nzType="primary" [disabled]="!validateForm.valid" type="button" (click)="registerConfirm()">注册</button>
+      <button nz-button (click)="resetForm($event)">重置</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

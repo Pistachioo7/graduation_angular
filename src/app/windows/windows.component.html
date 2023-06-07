@@ -1,0 +1,90 @@
+<div class="title">窗口信息管理系统</div>
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" style="margin: auto" *ngIf="type == 'admin'">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>窗口ID</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback nzValidatingTip="校验中..." [nzErrorTip]="IDErrorTpl">
+      <input nz-input formControlName="wID" />
+      <ng-template #IDErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">ID不能为空!</ng-container>
+        <ng-container *ngIf="control.hasError('duplicated')">ID重复!</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>窗口名称</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="wNameErrorTpl">
+      <input nz-input formControlName="wName" type="text" />
+      <ng-template #wNameErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">窗口名称不能为空!</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>密码</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="wPasswordErrorTpl">
+      <input nz-input formControlName="wPassword" type="text" />
+      <ng-template #wPasswordErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">密码不能为空!</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+      <button nz-button nzType="primary" [disabled]="!validateForm.valid" type="button" (click)="addConfirm()">添加窗口</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<nz-table nzTableLayout="fixed" style="margin: 30px" *ngIf="type == 'admin'">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th nzCustomFilter>
+      名称
+      <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+        <i nz-icon nzType="search"></i>
+      </nz-filter-trigger>
+    </th>
+    <th>餐品数量</th>
+    <th>窗口状态</th>
+    <th>密码</th>
+    <th>编辑</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let window of windowsDisplay">
+    <td>{{ window.wID }}</td>
+    <td>
+      <div class="editable-cell" [hidden]="nameEditID === window.wID" (click)="startEditName(window.wID)"
+           nz-tooltip="" nzTooltipTitle="点击修改">
+        {{ window.wName }}
+      </div>
+      <input [hidden]="nameEditID !== window.wID" type="text" nz-input [(ngModel)]="window.wName"
+             (blur)="stopEditName(window.wID,window.wName, window.mealAmount, window.wStatus, window.wPassword)" />
+    </td>
+    <td>{{ window.mealAmount }}</td>
+    <td>{{ window.wStatus | wstatus }}</td>
+    <td>{{ window.wPassword }}</td>
+    <td>
+      <a routerLink="/edit-window/{{window.wID}}">修改 一 {{ window.wName }}</a>
+      <nz-divider nzType="vertical"></nz-divider>
+      <a (click)="deleteConfirm(window.wID, window.wName)">删除</a>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input type="text" nz-input placeholder="搜索名称" [(ngModel)]="searchValue" />
+      <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">搜索</button>
+      <button nz-button nzSize="small" (click)="reset()">重置</button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+
+<nz-result *ngIf="type != 'admin'" nzStatus="403" nzTitle="403" nzSubTitle="您无权访问当前页面!">
+  <div nz-result-extra>
+    <button nz-button nzType="primary" routerLink="">返回首页</button>
+  </div>
+</nz-result>

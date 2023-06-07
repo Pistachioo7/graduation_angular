@@ -1,0 +1,14 @@
+<nz-result *ngIf="id != ''"
+           nzStatus="success"
+           nzTitle="成功取消订单!"
+           nzSubTitle="如果您有其他需要，请及时预订!"
+>
+  <div nz-result-extra>
+    <button nz-button nzType="primary" routerLink="">返回首页</button>
+  </div>
+</nz-result>
+<nz-result *ngIf="id == ''" nzStatus="403" nzTitle="403" nzSubTitle="您无权访问当前页面!">
+  <div nz-result-extra>
+    <button nz-button nzType="primary" routerLink="">返回首页</button>
+  </div>
+</nz-result>

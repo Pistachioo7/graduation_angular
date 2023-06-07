@@ -1,0 +1,54 @@
+<div class="title">用户信息管理系统</div>
+<nz-table nzTableLayout="fixed" style="margin: 30px" *ngIf="type == 'admin'">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th nzCustomFilter>
+      姓名
+      <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+        <i nz-icon nzType="search"></i>
+      </nz-filter-trigger>
+    </th>
+    <th>性别</th>
+    <th>生日</th>
+    <th>密码</th>
+    <th>编辑</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of usersDisplay">
+    <td>{{ user.uID }}</td>
+    <td>
+      <div class="editable-cell" [hidden]="nameEditID === user.uID" (click)="startEditName(user.uID)"
+           nz-tooltip="" nzTooltipTitle="点击修改">
+        {{ user.uName }}
+      </div>
+      <input [hidden]="nameEditID !== user.uID" type="text" nz-input [(ngModel)]="user.uName"
+             (blur)="stopEditName(user.uID,user.uName, user.uSex, user.uBirthday, user.uPassword)" />
+    </td>
+    <td>{{user.uSex | sex}}</td>
+    <td>{{ user.uBirthday.toString().substring(5, 16) }}</td>
+    <td>{{ user.uPassword }}</td>
+    <td>
+      <a routerLink="/edit-user/{{user.uID}}">修改 一 {{ user.uName }}</a>
+      <nz-divider nzType="vertical"></nz-divider>
+      <a (click)="deleteConfirm(user.uID, user.uName)">删除</a>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input type="text" nz-input placeholder="搜索姓名" [(ngModel)]="searchValue" />
+      <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">搜索</button>
+      <button nz-button nzSize="small" (click)="reset()">重置</button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+
+<nz-result *ngIf="type != 'admin'" nzStatus="403" nzTitle="403" nzSubTitle="您无权访问当前页面!">
+  <div nz-result-extra>
+    <button nz-button nzType="primary" routerLink="">返回首页</button>
+  </div>
+</nz-result>

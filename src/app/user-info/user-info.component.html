@@ -1,0 +1,16 @@
+<div class="title">用户个人信息</div>
+<div *ngIf="id != ''">
+  <nz-descriptions nzTitle="个人信息" nzBordered style="margin: 50px">
+    <nz-descriptions-item nzTitle="用户ID">{{user.uID}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="姓名">{{user.uName}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="生日">{{user.uBirthday | date: 'yyyy-MM-dd'}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="性别">{{user.uSex | sex}}</nz-descriptions-item>
+    <nz-descriptions-item nzTitle="密码">{{user.uPassword}}</nz-descriptions-item>
+  </nz-descriptions>
+  <button nz-button nzType="primary" type="button" routerLink="/edit-user/{{id}}" style="margin: 50px">修改</button>
+</div>
+<nz-result *ngIf="id == ''" nzStatus="403" nzTitle="403" nzSubTitle="您无权访问当前页面!">
+  <div nz-result-extra>
+    <button nz-button nzType="primary" routerLink="">返回首页</button>
+  </div>
+</nz-result>

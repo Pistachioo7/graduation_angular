@@ -1,0 +1,40 @@
+<div class="title">系统统计信息</div>
+<div style="background: #ECECEC;padding:30px;" *ngIf="type == 'admin'">
+  <nz-card [nzBordered]="false" nzTitle="系统总览">
+    <nz-row [nzGutter]="16">
+      <nz-col [nzSpan]="12">
+        <nz-statistic [nzValue]="(userCnt | number)!" [nzTitle]="'用户数量'"></nz-statistic>
+      </nz-col>
+      <nz-col [nzSpan]="12">
+        <nz-statistic [nzValue]="(windowCnt | number)!" [nzTitle]="'窗口数量'"></nz-statistic>
+      </nz-col>
+      <nz-col [nzSpan]="12">
+        <nz-statistic [nzValue]="(mealCnt | number)!" [nzTitle]="'餐品数量'"></nz-statistic>
+      </nz-col>
+      <nz-col [nzSpan]="12">
+        <nz-statistic [nzValue]="(orderCnt | number)!" [nzTitle]="'订单数量'"></nz-statistic>
+      </nz-col>
+    </nz-row>
+  </nz-card>
+  <nz-divider></nz-divider>
+  <nz-card [nzBordered]="false" nzTitle="餐品评分">
+    <b>评分5:</b>&nbsp;&nbsp;&nbsp;&nbsp;<nz-progress [nzPercent]="rating5Cnt / ratingCnt * 100" nzType="circle" [nzStrokeColor]="'#87d068'"></nz-progress>&nbsp;&nbsp;&nbsp;&nbsp;
+    <b>评分4:</b>&nbsp;&nbsp;&nbsp;&nbsp;<nz-progress [nzPercent]="rating4Cnt / ratingCnt * 100" nzType="circle"></nz-progress>&nbsp;&nbsp;&nbsp;&nbsp;
+    <b>评分3:</b>&nbsp;&nbsp;&nbsp;&nbsp;<nz-progress [nzPercent]="rating3Cnt / ratingCnt * 100" nzType="circle"></nz-progress>&nbsp;&nbsp;&nbsp;&nbsp;
+    <b>评分2:</b>&nbsp;&nbsp;&nbsp;&nbsp;<nz-progress [nzPercent]="rating2Cnt / ratingCnt * 100" nzType="circle"></nz-progress>&nbsp;&nbsp;&nbsp;&nbsp;
+    <b>评分1:</b>&nbsp;&nbsp;&nbsp;&nbsp;<nz-progress [nzPercent]="rating1Cnt / ratingCnt * 100" nzType="circle" [nzStrokeColor]="'red'"></nz-progress>
+  </nz-card>
+  <nz-divider></nz-divider>
+  <nz-card [nzBordered]="false" nzTitle="实时状态">
+    <nz-badge nzStatus="processing" nzText="接单中窗口:"></nz-badge>
+    <nz-progress [nzPercent]="windowOpenCnt / windowCnt * 100" nzStatus="normal" nzType="line"></nz-progress>
+    <nz-badge nzStatus="processing" nzText="剩余餐品量:"></nz-badge>
+    <nz-progress [nzPercent]="res" nzStatus="normal" nzType="line"></nz-progress>
+  </nz-card>
+</div>
+
+<nz-result *ngIf="type != 'admin'" nzStatus="403" nzTitle="403" nzSubTitle="您无权访问当前页面!">
+  <div nz-result-extra>
+    <button nz-button nzType="primary" routerLink="">返回首页</button>
+  </div>
+</nz-result>

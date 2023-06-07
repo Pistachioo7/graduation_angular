@@ -1,0 +1,33 @@
+<div class="title">订单信息编辑系统</div>
+<form nz-form (ngSubmit)="saveConfirm()" style="margin: auto" *ngIf="type == 'admin'">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired>订单ID</nz-form-label>
+    <nz-form-control nzHasFeedback [nzSpan]="12" nzErrorTip="ID不能为空!">
+      <input nz-input [ngModel]="order.oID" name="oID" required disabled/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5">订单状态</nz-form-label>
+    <nz-form-control nzHasFeedback [nzSpan]="12" nzErrorTip="订单状态不能为空!">
+      <nz-radio-group [(ngModel)]="radioValue" name="oStatus" >
+        <label nz-radio nzValue='0'>待接单</label>
+        <label nz-radio nzValue='1'>正在备餐</label>
+        <label nz-radio nzValue='2'>待取餐</label>
+        <label nz-radio nzValue='3'>已完成</label>
+        <label nz-radio nzValue='4'>已取消</label>
+      </nz-radio-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control [nzOffset]="7" [nzSpan]="12">
+      <button nz-button nzType="primary">保存</button>&nbsp;&nbsp;
+      <button nz-button (click)="goBack()">返回</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<nz-result *ngIf="type != 'admin'" nzStatus="403" nzTitle="403" nzSubTitle="您无权访问当前页面!">
+  <div nz-result-extra>
+    <button nz-button nzType="primary" routerLink="">返回首页</button>
+  </div>
+</nz-result>

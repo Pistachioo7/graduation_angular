@@ -1,0 +1,99 @@
+<div *ngFor="let order of currentOrders">
+  <nz-alert nzType="info" nzMessage="进行中订单ID: {{order.oID}}" [nzAction]="actionTemplate"
+            nzDescription="预订时间: {{order.oDatetime}} &nbsp;&nbsp;&nbsp;&nbsp;订单状态: {{order.oStatus | oStatus}}" nzShowIcon></nz-alert>
+  <ng-template #actionTemplate>
+    <button nz-button nzType="primary" [nzSize]="size" nzShape="round" routerLink="/order-details/{{order.oID}}">
+      <i nz-icon nzType="snippets" nzTheme="outline"></i>
+      查看详情
+    </button>
+    &nbsp;&nbsp;
+    <button nz-button nzType="primary" [nzSize]="size" nzShape="round" (click)="cancelConfirm(order.oID)" *ngIf="order.oStatus == 0">
+      <i nz-icon nzType="minus-circle" nzTheme="outline"></i>
+      取消订单
+    </button>
+    <button nz-button nzType="primary" [nzSize]="size" nzShape="round" (click)="cancelConfirm(order.oID)" disabled *ngIf="order.oStatus != 0">
+      <i nz-icon nzType="minus-circle" nzTheme="outline"></i>
+      取消订单
+    </button>
+  </ng-template>
+</div>
+
+<nz-page-header class="site-page-header" nzTitle="猜你喜欢" nzSubtitle="根据您的评分数据为您推荐以下餐品" *ngIf="loginType == '' && id != ''"></nz-page-header>
+<div style="background: #ECECEC;padding:30px;">
+  <div nz-row [nzGutter]="8">
+    <div nz-col [nzSpan]="8" *ngFor="let meal of recommendMeals">
+      <nz-card nzTitle={{meal.mName}} [nzExtra]="extraTemplate">
+        <h3>价格: {{meal.price}} 元</h3>
+        <nz-space nzAlign="end">
+          <h2 *ngIf="meal.remainSupply > 0">剩余可订: {{meal.remainSupply}}份</h2>
+          <h2 style="color: red" *ngIf="meal.remainSupply <= 0">SOLD OUT!!</h2>
+          <img src="assets/images/{{meal.mID}}.jpg" style="width: 200px; height: 200px; padding: 30px">
+          <div style="padding: 20px">
+            <nz-progress [nzPercent]="meal.remainSupply / meal.maxSupply * 100" nzType="circle" [nzWidth]="80" nzStatus = "normal"></nz-progress>
+          </div>
+        </nz-space>
+        <button nz-button nzType="primary" routerLink="/meal/{{meal.mID}}" style="width: 50%">
+          <i nz-icon nzType="snippets" nzTheme="outline"></i>
+          查看详情
+        </button>
+        <button nz-button nzType="primary" *ngIf="meal.remainSupply > 0 && loginType == ''" class="mystyle" (click)="orderConfirm(meal)">
+          <i nz-icon nzType="clock-circle" nzTheme="outline"></i>
+          订餐
+        </button>
+        <button nz-button nzType="primary" disabled *ngIf="meal.remainSupply <= 0 || loginType != ''" style="width: 45%;">
+          <i nz-icon nzType="clock-circle" nzTheme="outline"></i>
+          订餐
+        </button>
+      </nz-card>
+      <ng-template #extraTemplate>
+        <nz-rate [(ngModel)]="rating" (ngModelChange)="rateConfirm(meal)"></nz-rate>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<nz-page-header class="site-page-header" nzTitle="所有餐品" nzSubtitle="检索您需要的餐品名称">
+  <nz-page-header-extra>
+    <nz-space>
+      <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+        <input type="text" nz-input placeholder="输入餐品名称" [(ngModel)]="searchValue" />
+      </nz-input-group>
+      <ng-template #suffixIconButton>
+        <button nz-button nzType="primary" nzSearch (click)="search()"><span nz-icon nzType="search"></span></button>
+      </ng-template>
+      <button nz-button nzType="primary" (click)="reset()">重置</button>
+    </nz-space>
+  </nz-page-header-extra>
+</nz-page-header>
+<div style="background: #ECECEC;padding:30px;">
+  <div nz-row [nzGutter]="8">
+    <div nz-col [nzSpan]="8" *ngFor="let meal of mealsDisplay">
+      <nz-card nzTitle={{meal.mName}} [nzExtra]="extraTemplate">
+        <h3>价格: {{meal.price}} 元</h3>
+        <nz-space nzAlign="end">
+          <h2 *ngIf="meal.remainSupply > 0">剩余可订: {{meal.remainSupply}}份</h2>
+          <h2 style="color: red" *ngIf="meal.remainSupply <= 0">SOLD OUT!!</h2>
+          <img src="assets/images/{{meal.mID}}.jpg" style="width: 200px; height: 200px; padding: 30px">
+          <div style="padding: 20px">
+            <nz-progress [nzPercent]="meal.remainSupply / meal.maxSupply * 100" nzType="circle" [nzWidth]="80" nzStatus = "normal"></nz-progress>
+          </div>
+        </nz-space>
+        <button nz-button nzType="primary" routerLink="/meal/{{meal.mID}}" style="width: 50%">
+          <i nz-icon nzType="snippets" nzTheme="outline"></i>
+          查看详情
+        </button>
+        <button nz-button nzType="primary" *ngIf="meal.remainSupply > 0 && loginType == ''" class="mystyle" (click)="orderConfirm(meal)">
+          <i nz-icon nzType="clock-circle" nzTheme="outline"></i>
+          订餐
+        </button>
+        <button nz-button nzType="primary" disabled *ngIf="meal.remainSupply <= 0 || loginType != ''" style="width: 45%">
+          <i nz-icon nzType="clock-circle" nzTheme="outline"></i>
+          订餐
+        </button>
+      </nz-card>
+      <ng-template #extraTemplate>
+        <nz-rate [(ngModel)]="rating" (ngModelChange)="rateConfirm(meal)"></nz-rate>
+      </ng-template>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<ul nz-menu nzMode="horizontal" style="padding: 30px" class="bcolor">
+  <li nz-submenu nzTitle="用户端" nzIcon="appstore" [nzDisabled]="type != ''">
+    <ul>
+      <li nz-menu-item routerLink="/order">订餐</li>
+      <li nz-menu-item routerLink="/user-orders">历史订单</li>
+      <li nz-menu-item routerLink="/user-info">个人信息</li>
+    </ul>
+  </li>
+  <li nz-submenu nzTitle="窗口端" nzIcon="setting" [nzDisabled]="type != 'window'">
+    <ul>
+      <li nz-menu-item routerLink="/receive">接单</li>
+      <li nz-menu-item routerLink="/window-orders">历史订单</li>
+      <li nz-menu-item routerLink="/meals">餐品信息管理</li>
+    </ul>
+  </li>
+  <li nz-submenu nzTitle="管理端" nzIcon="setting" [nzDisabled]="type != 'admin'">
+    <ul>
+      <li nz-menu-item routerLink="/users">用户信息管理</li>
+      <li nz-menu-item routerLink="/windows">窗口信息管理</li>
+      <li nz-menu-item routerLink="/orders">订单信息管理</li>
+      <li nz-menu-item routerLink="/statistics">统计信息</li>
+    </ul>
+  </li>
+  <li nz-submenu nzTitle="未登录" nzIcon="info-circle" *ngIf="id == ''">
+    <ul>
+      <li nz-menu-group nzTitle="已有账号">
+        <ul>
+          <li nz-menu-item routerLink="/user-login">用户登录</li>
+        </ul>
+        <ul>
+          <li nz-menu-item routerLink="/window-login">&nbsp;&nbsp;&nbsp;窗口登录</li>
+        </ul>
+        <ul>
+          <li nz-menu-item routerLink="/admin-login">&nbsp;&nbsp;&nbsp;管理员登录</li>
+        </ul>
+      </li>
+      <li nz-menu-group nzTitle="没有账号">
+        <ul>
+          <li nz-menu-item routerLink="/register">用户注册</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li nz-menu-item *ngIf="id == null">
+    <i nz-icon nzType="loading" nzTheme="outline"></i>
+    <a>&nbsp;&nbsp;加载中...</a>
+  </li>
+  <li nz-submenu nzTitle={{id}}:{{name}} nzIcon="check-circle" *ngIf="id != '' && id != null">
+    <ul>
+      <li nz-menu-item (click)="exit()">退出登录</li>
+    </ul>
+  </li>
+  <li nz-menu-item>
+    <i nz-icon nzType="link" nzTheme="outline"></i>
+    <a href="http://hnxqgwh.neu.edu.cn/2925/list.htm" target="_blank" rel="noopener noreferrer">&nbsp;&nbsp;关于</a>
+  </li>
+</ul>

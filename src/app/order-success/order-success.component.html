@@ -1,0 +1,14 @@
+<nz-result *ngIf="id != ''"
+           nzStatus="success"
+           nzTitle="订餐成功! 订单ID: {{order.oID}}"
+           nzSubTitle="姓名: {{name}}; 学号: {{id}}; 餐品: {{meal.mName}}; 时间: {{order.oDatetime}};  请关注订单状态及时取餐!"
+>
+  <div nz-result-extra>
+    <button nz-button nzType="primary" routerLink="">返回首页</button>
+  </div>
+</nz-result>
+<nz-result *ngIf="id == ''" nzStatus="403" nzTitle="403" nzSubTitle="您无权访问当前页面!">
+  <div nz-result-extra>
+    <button nz-button nzType="primary" routerLink="">返回首页</button>
+  </div>
+</nz-result>
